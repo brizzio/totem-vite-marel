@@ -1,9 +1,10 @@
 import React , {useState, useEffect} from 'react'
 import Spinner from '../components/spinner/Spinner'
+import useStore from '../context/hooks/useStore'
 
 const AppLayout = ({children}) => {
 
-    const [ loading, setLoading ] = useState(false)
+    const {loading } = useStore()
 
     useEffect(()=>{
         //verify loading state
@@ -33,9 +34,10 @@ const AppLayout = ({children}) => {
 
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen bg-white">
+    <div className="flex justify-center items-center w-screen h-screen bg-indigo-200"
+    style={{background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)"}}>
         
-        <div className="w-[84rem] h-[38rem] bg-white box-border border-zinc-300 rounded-2xl shadow shadow-2xl">
+        <div className="w-[84rem] h-[40rem] bg-white box-border border-zinc-300 rounded-2xl shadow shadow-2xl">
 
                  {children}
 

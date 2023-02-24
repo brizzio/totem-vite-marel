@@ -5,7 +5,12 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage:
+      {
+        'lottery': "url('/lotteryIcon.svg)"
+      }
+    },
   },
   plugins: [],
 }

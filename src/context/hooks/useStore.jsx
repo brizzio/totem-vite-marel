@@ -7,15 +7,18 @@ const useStore = () => {
   
 
   
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [bags, setBags] = useState(0)
 
 //on startup
   console.log('Store on')
+
+  console.log('Store bags>>', bags)
   
   const startLoading = ()=>setLoading(true)
   const stopLoading = ()=>setLoading(false)
   
-        
+  const handleUpdateBags=(numberOfBags)=>setBags(numberOfBags)
 
     
     
@@ -25,7 +28,9 @@ const useStore = () => {
     {
       loading,
       startLoading,
-      stopLoading
+      stopLoading,
+      bags,
+      handleUpdateBags
     }
   )
 }

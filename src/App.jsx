@@ -1,9 +1,15 @@
 import { useState } from 'react'
 import AppLayout from './layouts/AppLayout';
+import MainLayout from './layouts/MainLayout';
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
-import Welcome from './pages/Welcome';
-import Home from './pages/Home';
+
 import StoreProvider from './context/StoreProvider';
+
+import Welcome from './pages/Welcome';
+import InputFiscalCode from './pages/flow/InputFiscalCode';
+import Home from './pages/Home';
+
+
 
 function App() {
   
@@ -16,8 +22,11 @@ function App() {
       <StoreProvider>
         <Routes>
           <Route index element={<Welcome/>} />
-          <Route path="/home" element={<Home/>} />
-        </Routes>  
+          <Route path="/flow-1" element={<InputFiscalCode/>} />
+          <Route element={<MainLayout/>}>
+            <Route path="/home" element={<Home/>} />
+          </Route>
+       </Routes>  
       </StoreProvider>
     </Router>
     </AppLayout>

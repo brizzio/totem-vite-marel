@@ -23,7 +23,7 @@ const Welcome = () => {
       </div>
 
       <button className="bg-orange-500  text-2xl rounded-full py-4 px-20 shadow-lg uppercase tracking-wider text-white"
-      onClick={()=>navigate('/home')}>
+      onClick={()=>navigate('/flow-1')}>
           INIZIO
         </button>
         <IdiomSelector cn="absolute top-0 right-0 pt-3"/>

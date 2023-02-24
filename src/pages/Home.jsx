@@ -4,7 +4,7 @@ import RenderListItem from '../components/RenderListItem'
 const Home = () => {
   return (
     <>
-        <div className='flex flex-col items-start justify-start  border-zinc-600 w-1/2 bg-white mx-2'>
+        <div className='flex flex-col items-start justify-start  border-zinc-600 w-1/2 bg-white mx-2 mt-4 rounded-tl-2xl rounded-tr-2xl'>
             <div className='flex items-center  w-full bg-teal-600 py-3 rounded-tl-2xl rounded-tr-2xl pr-2'>
                 <span className='text-white text-lg pl-3'>LA TUA SPESA</span>
                 
@@ -20,7 +20,7 @@ const Home = () => {
 
         
 
-        <div className='static flex flex-col items-left justify-start  border-zinc-600 w-1/2 gap-6 ml-3'>
+        <div className='static flex flex-col items-left justify-start  border-zinc-600 w-1/2 gap-6 ml-3 mt-4'>
             
            {/*  <div className=" flex flex-row items-center justify-center border border-black w-full">
                 

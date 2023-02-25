@@ -20,7 +20,7 @@ const Home = () => {
 
         
 
-        <div className='static flex flex-col items-left justify-start  border-zinc-600 w-1/2 gap-6 ml-3 mt-4'>
+        <div className='static flex flex-col items-left justify-start  border-zinc-600 w-1/2 gap-5 ml-3 mt-4'>
             
            {/*  <div className=" flex flex-row items-center justify-center border border-black w-full">
                 
@@ -41,6 +41,15 @@ const Home = () => {
                     <button className='bg-orange-600  py-2 mx-2 rounded-lg shadow-xl text-white font-semibold w-[14rem] text-2xl'>CLICCA
                     </button>
                 </div>   
+            </div>
+
+            <div className=" absolute top-8 right-24 flex flex-col h-[8rem] items-center justify-center border-zinc-600 bg-white shadow-lg rounded-2xl  w-[8rem] pb-6 ">
+
+                
+                <img  className="  w-[5rem]" src='/lotteryIcon.png'/>
+
+                <span className='text-blue font-thin text-xl px-3 text-center w-[10rem] leading-6'>LOTTERIA SCONTRINI</span>
+                    
             </div>
             
            

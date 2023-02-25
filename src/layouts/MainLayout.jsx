@@ -29,28 +29,31 @@ const MainLayout = () => {
         
         
         {/* FOOTER ABSOLUTE POSITIONED */}
-        <div className='absolute w-full bottom-0 flex items-center justify-between gap-2'>
+        <div className='absolute w-full bottom-0 flex items-center justify-between  '>
 
-            <img  className=" p-3 h-12 z-10" src='/marel-logo.png'/>
-
-            <div className='flex items-center gap-3'>
-                <img  className="p-3 h-20" src='/speaker.png'/>
-
-                <img  className="p-3 h-20" src='/handicap.png'/>
             
-                <div className='flex items-center justify-center border border-zinc-700 rounded-lg h-fit py-1 px-3 gap-2 shadow-md bg-white '>
+
+            <div className='flex gap-8 items-center'>
+
+               <img  className=" w-28 " src='/marel-logo.png'/>
+
+                <img  className="p-2 h-20 " src='/speaker.png'/>
+
+                <img  className="p-2 h-20 " src='/handicap.png'/>
+            
+                {/* <div className='flex items-center justify-center border rounded-lg h-fit py-1 px-3 gap-2 shadow-md bg-white bg-opacity-20 backdrop-blur-lg drop-shadow-lg '>
                     <LotteryIconSVG />
                     <span className='text-black text-lg pr-2'>LOTTERIA SCONTRINI</span>
-                </div>
+                </div> */}
 
-                <button className='flex items-center text-xl border border-zinc-600 rounded-lg h-fit py-1 px-3 shadow-md bg-white '><i class="fa-solid fa-handshake-angle fa-2x pr-3 "></i>RICHIEDI ASSISTENZA
+                <button className='flex items-center text-xl  rounded-lg h-fit py-1 px-3 shadow-md bg-white bg-opacity-20 backdrop-blur-lg drop-shadow-lg '><i class="fa-solid fa-handshake-angle fa-2x pr-3 "></i>RICHIEDI ASSISTENZA
                 </button>
 
                 <Bags/>
             </div>
             
 
-             <BizerbaLogoSVG cn="right-3 pr-3"/>
+             <BizerbaLogoSVG/>
 
         
         </div>
@@ -70,7 +73,8 @@ const MainLayout = () => {
         
        
        
-        <div className='flex flex-grow h-full m-16 '>
+        <div className='flex flex-grow h-full m-16 '
+        >
             <Outlet />
         </div>
 

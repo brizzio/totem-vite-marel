@@ -32,7 +32,7 @@ const Bags = () => {
       }
 
   return (
-    <div className='flex items-center text-xl border border-zinc-600 bg-white rounded-lg h-fit py-1 px-1shadow-md '>
+    <div className='flex items-center text-xl  bg-white  rounded-lg h-fit py-1 px-1 shadow-md '>
          <button onClick={decrement}>
             <i className="fa-solid fa-minus text-left w-16 pl-2"></i>
         </button>

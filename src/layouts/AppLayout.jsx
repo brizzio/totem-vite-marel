@@ -36,7 +36,8 @@ const AppLayout = ({children}) => {
   return (
     <div className="flex justify-center items-center w-screen h-screen bg-white">
         
-        <div className="w-[84rem] h-[40rem] bg-white box-border border-zinc-300 rounded-2xl shadow shadow-2xl">
+        <div className="w-[84rem] h-[40rem] bg-white box-border border-zinc-300 rounded-2xl shadow shadow-2xl"
+        >
 
                  {children}
 

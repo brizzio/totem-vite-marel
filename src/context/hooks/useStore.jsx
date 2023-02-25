@@ -8,34 +8,44 @@ const useStore = () => {
   
 
   
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [bags, setBags] = useState(0)
   
-  const prices = useRef()
+  const [prices, setPrices] = useState([])
+  const [items, setItems] = useState([])
 
   useEffect(()=>{
-   /*  api.get('priceList').then(result => {
-      localStorage.setItem('prices', JSON.stringify(result))
-      prices.current=result
+      api.get('priceList').then(result => {
+      //localStorage.setItem('prices', JSON.stringify(result))
+      setPrices(result)
       setLoading(false)
 
-    }) */
+    }) 
     
     return ()=>console.log('useStore unmount')
   }, [])
 
+  useEffect(()=>{
+
+    console.log('effect items changed', items)
+
+
+  
+  return ()=>console.log('unmount items changed', items)
+}, [items])
+
 //on startup
   console.log('Store on')
-  console.log('Store prices', prices.current)
+  //console.log('Store prices', prices)
 
   console.log('Store bags>>', bags)
   
-  const startLoading = ()=>setLoading(true)
-  const stopLoading = ()=>setLoading(false)
+  const loadState = (bool)=>setLoading(bool)
+  const setPriceList = (prices)=>setPrices(prices)
   
   const handleUpdateBags=(numberOfBags)=>setBags(numberOfBags)
 
-    
+  
     
     
   
@@ -43,10 +53,11 @@ const useStore = () => {
     {
       loading,
       prices,
-      startLoading,
-      stopLoading,
+      loadState,
+      setPriceList,
       bags,
-      handleUpdateBags
+      handleUpdateBags,
+      
     }
   )
 }

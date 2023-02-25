@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import AppLayout from './layouts/AppLayout';
 import MainLayout from './layouts/MainLayout';
 import SearchLayout from './layouts/SearchLayout';
@@ -10,10 +10,13 @@ import Welcome from './pages/Welcome';
 import InputFiscalCode from './pages/flow/InputFiscalCode';
 import Home from './pages/Home';
 import SearchProducts from './pages/SearchProducts';
-
-
+import api from './api/api';
+import useStore from './context/hooks/useStore';
 
 function App() {
+
+  const {setPriceList, loadState} = useStore()
+
   
 
   return (

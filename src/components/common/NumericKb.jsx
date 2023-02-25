@@ -1,4 +1,4 @@
-import React, { useState , useRef,forwardRef, useImperativeHandle} from "react";
+import React, { useState ,useEffect, useRef,forwardRef, useImperativeHandle} from "react";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import "../../index.css";
@@ -13,6 +13,13 @@ const NumericKb = forwardRef((props, ref) => {
   const keyboard = useRef();
 
 //console.log('inputs no kb: ', input)
+useEffect(() => {
+  setInput(props.inputValue);
+
+  return () => {
+    console.log('effect numeric keyboard', input)
+  }
+}, [])
 
 
 useImperativeHandle(ref, () => ({

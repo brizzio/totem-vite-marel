@@ -46,7 +46,7 @@ const MainLayout = () => {
                     <span className='text-black text-lg pr-2'>LOTTERIA SCONTRINI</span>
                 </div> */}
 
-                <button className='flex items-center text-xl  rounded-lg h-fit py-1 px-3 shadow-md bg-white bg-opacity-20 backdrop-blur-lg drop-shadow-lg '><i class="fa-solid fa-handshake-angle fa-2x pr-3 "></i>RICHIEDI ASSISTENZA
+                <button className='flex items-center text-xl  rounded-lg h-fit py-1 px-3 shadow-md bg-white bg-opacity-20 backdrop-blur-lg drop-shadow-lg '><i className="fa-solid fa-handshake-angle fa-2x pr-3 "></i>RICHIEDI ASSISTENZA
                 </button>
 
                 <Bags/>

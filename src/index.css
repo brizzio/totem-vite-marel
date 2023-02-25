@@ -2,3 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
+/* numeric keyboard classes */
+
+.numeric-theme {
+    width: 550px;
+    height: 450px;
+    margin: 0 auto;
+    
+  }
+  
+  
+  .myTheme {
+    
+    height:fit-content;
+    background-color: white;
+  }
+  
+  .simple-keyboard.hg-layout-default .hg-button.hg-red {
+    background-color: rgb(252, 252, 252);
+    color: rgb(39, 44, 66);
+    height: 70px;
+    font-size: 30px;
+    box-shadow: 3px 3px 3px rgb(223, 233, 236);
+  }
+  
+  .simple-keyboard.hg-theme-default.numeric-theme
+    .hg-button.hg-standardBtn.hg-button.shifted{
+      background-color: rgb(251, 255, 255);
+      color: rgb(7, 13, 39);
+      font-size: 30px;
+      height: 55px;
+    }
+  
+  
+  .simple-keyboard.hg-layout-default .hg-button.hg-side {
+    background-color: rgb(255, 255, 255);
+    color: #234b57;
+    box-shadow: 3px 3px 3px rgb(223, 233, 236);
+    height: 70px;
+    font-size: 30px;
+  }
+
+
+  /* the color is url encoded fill='%234b5772' */
+  .simple-keyboard.hg-layout-default .hg-button.enter {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!--! Font Awesome Pro 6.2.1 by %40fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons  Inc. --%3E%3Cpath fill='%234b5772' d='M352 96l64 0c17.7 0 32 14.3 32 32l0 256c0 17.7-14.3 32-32 32l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0c53 0 96-43 96-96l0-256c0-53-43-96-96-96l-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32zm-9.4 182.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L242.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size: 27px 27px;
+    
+  }
+
+
+  /* the color is url encoded fill='%234b5772' */
+  .simple-keyboard.hg-layout-default .hg-button.del {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512'%3E%3C!--! Font Awesome Pro 6.2.1 by %40fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons  Inc. --%3E%3Cpath fill='%234b5772' d='M576 128c0-35.3-28.7-64-64-64H205.3c-17 0-33.3 6.7-45.3 18.7L9.4 233.4c-6 6-9.4 14.1-9.4 22.6s3.4 16.6 9.4 22.6L160 429.3c12 12 28.3 18.7 45.3 18.7H512c35.3 0 64-28.7 64-64V128zM271 175c9.4-9.4 24.6-9.4 33.9 0l47 47 47-47c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-47 47 47 47c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-47-47-47 47c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l47-47-47-47c-9.4-9.4-9.4-24.6 0-33.9z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size: 27px 27px;
+    
+  }
+  
+  .simple-keyboard.hg-layout-default .hg-button.hg-highlight {
+    box-shadow: 0px 0px 40px 5px rgba(255, 255, 0, 0.5);
+    z-index: 1;
+  }
+  

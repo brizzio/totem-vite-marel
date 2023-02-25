@@ -1,7 +1,15 @@
 import React from 'react'
 import RenderListItem from '../components/RenderListItem'
+import useStore from '../context/hooks/useStore'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
+
+  const { prices } = useStore()
+  const navigate = useNavigate()
+  
+  console.log('Home', prices.current)
+    
   return (
     <>
         <div className='flex flex-col items-start justify-start  border-zinc-600 w-1/2 bg-white mx-2 mt-4 rounded-tl-2xl rounded-tr-2xl'>
@@ -38,7 +46,8 @@ const Home = () => {
                 <img  className="  h-[8rem] p-3 " src='/scanner.gif'/>
                 <div className=" flex flex-col w-full ">
                     <span className='text-blue font-thin text-3xl px-3 self-center w-[16rem] my-3'>Il scanner non legge il prodotto?</span>
-                    <button className='bg-orange-600  py-2 mx-2 rounded-lg shadow-xl text-white font-semibold w-[14rem] text-2xl'>CLICCA
+                    <button className='bg-orange-600  py-2 mx-2 rounded-lg shadow-xl text-white font-semibold w-[14rem] text-2xl'
+                    onClick={()=>navigate('/search')}>CLICCA
                     </button>
                 </div>   
             </div>
@@ -60,16 +69,16 @@ const Home = () => {
 
                 <div className=" flex flex-row w-full gap-3 items-center">
                     <div className=" flex flex-col items-center justify-center h-[8rem]  border-zinc-600 bg-white shadow-lg rounded-2xl  w-[12rem] " >
-                        <i class="fa-solid fa-mobile-screen-button fa-3x"></i>
+                        <i className="fa-solid fa-mobile-screen-button fa-3x"></i>
                         <span className='text-blue font-thin text-2xl px-3 w-full'>Ricarica Telefono</span>
                     </div>
                     <div className=" flex flex-col items-center justify-center h-[8rem]  border-zinc-600 bg-white shadow-lg rounded-2xl  w-[12rem] ">
-                        <i class="fa-solid fa-percent fa-3x"></i>
+                        <i className="fa-solid fa-percent fa-3x"></i>
                         <span className='text-blue font-thin text-2xl px-3 
                         w-full'>Applica Sconto</span>
                     </div>
                     <div className=" flex flex-col items-center justify-center h-[8rem]  border-zinc-600 bg-white shadow-lg rounded-2xl  w-[12rem] ">
-                        <i class="fa-solid fa-basket-shopping fa-3x"></i>
+                        <i className="fa-solid fa-basket-shopping fa-3x"></i>
                         <span className='text-blue font-thin text-2xl px-3 w-full '>La Mia Borsa</span>
                     </div>
                 </div> 

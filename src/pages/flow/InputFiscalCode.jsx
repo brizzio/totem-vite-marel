@@ -1,17 +1,23 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 
 import BizerbaLogoSVG from '../../components/common/BizerbaLogoSVG'
 import { useNavigate } from 'react-router-dom'
+import NumericKb from '../../components/common/NumericKb'
 
 const InputFiscalCode = () => {
 
     const [code, setCode] = useState('')
 
+    const ref=useRef()
+
     const navigate = useNavigate()
 
-    const handleCodeChange=(e)=>{
-        setCode(e.target.value)
+    const handleCodeChange = (code) =>{
+        console.log('handleCodeChange', code)
+        if (code === '') ref.current.clearInput()
+        setCode(code)
     }
+
 
 
 
@@ -26,12 +32,16 @@ const InputFiscalCode = () => {
           <h3 className="text-2xl mb-8 text-gray-200">
             Vuoi il tuo codice fiscale stampato nello scontrino?
           </h3>
-          <input className='w-[28rem] h-[4rem] rounded-lg'
-                 type='text' 
-                 value={code} 
-                 onChange={(event)=>handleCodeChange(event)}/>
+
+          <div className='relative flex items-center'>
+            <input className='text-black font-thin text-3xl m-3 py-4 text-center w-[35rem]  bg-white rounded-xl shadow-lg' type="text" value={code} readOnly />
+            <i 
+            onClick={()=>handleCodeChange('')}
+            className="absolute right-5 fa-regular fa-circle-xmark fa-xl text-zinc-600"></i>
+
+          </div>
   
-         
+         <NumericKb ref={ref} inputValue={code} change={handleCodeChange}/>
         </div>
   
         <button className="bg-orange-500  text-2xl rounded-full py-4 px-20 shadow-lg uppercase tracking-wider text-white"

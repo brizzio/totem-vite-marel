@@ -15,7 +15,7 @@ import useStore from './context/hooks/useStore';
 
 function App() {
 
-  const {setPriceList, loadState} = useStore()
+  const {bags} = useStore()
 
   
 
@@ -29,7 +29,7 @@ function App() {
           <Route index element={<Welcome/>} />
           <Route path="/flow-1" element={<InputFiscalCode/>} />
           <Route element={<MainLayout/>}>
-            <Route path="/home" element={<Home/>} />
+            <Route path="/home" element={<Home bags={bags}/>} />
           </Route> 
           <Route element={<SearchLayout/>}>
             <Route path="/search" element={<SearchProducts/>} />

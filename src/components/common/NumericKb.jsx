@@ -33,7 +33,7 @@ useImperativeHandle(ref, () => ({
 const onChange = input => {
   setInput(input);
   props.change(input)
-  console.log("Input changed", input);
+  //console.log("Input changed", input);
   //props.onChange(input.default)
   
 };
@@ -44,8 +44,8 @@ const handleShift = () => {
 };
 
 const handleEnter = () => {
-  console.log('keyboard says: ', input.default)
-  console.log("input no done", input);
+  //console.log('keyboard says: ', input.default)
+  //console.log("input no done", input);
   clear('')
 };
 

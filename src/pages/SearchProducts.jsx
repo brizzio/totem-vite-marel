@@ -3,7 +3,7 @@ import NumericKb from '../components/common/NumericKb'
 import useStore from '../context/hooks/useStore'
 import { useNavigate } from 'react-router-dom'
 
-import { addItemToCollectionLS } from '../utils/functions'
+import { addItemToCollectionLS, itemBuilder } from '../utils/functions'
 
 //https://codesandbox.io/s/react-input-autocomplete-knwn3?file=/src/InputAuto.js
 
@@ -22,7 +22,7 @@ const SearchProducts = () => {
     },[prices])
 
     const handleCodeChange = (code) =>{
-        console.log('handleCodeChange', code)
+        //console.log('handleCodeChange', code)
         if (code === '') ref.current.clearInput()
         const match = prices.filter(el => (el.upc === code))
         if (match.length == 1) {
@@ -35,13 +35,15 @@ const SearchProducts = () => {
 
     const tryAgain = () =>{
         console.log('tryAgain', code)
+
         setFound({})
         setCode('')
     }
 
-    const addToCart = () =>{
+    const addToCart = async () =>{
         console.log('addToCart', code)
-        addItemToCollectionLS('items', found)
+        let item = await itemBuilder(found,1,1)
+        addItemToCollectionLS('items', item)
         setFound({})
         setCode('')
         navigate(-1)

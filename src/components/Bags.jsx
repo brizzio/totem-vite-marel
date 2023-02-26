@@ -1,14 +1,24 @@
 import React , {useState, useEffect}from 'react'
 import useStore from '../context/hooks/useStore';
+import { upsertCollectionLS , 
+        itemBuilder, 
+        removeItemFromCollectionLSById, 
+        findBagItemInLSItems} from '../utils/functions';
+import { useNavigate } from 'react-router-dom';
 
 const Bags = () => {
 
-    const {bags, handleUpdateBags} = useStore()
+    const {bags, handleUpdateBags, prices} = useStore()
     
-    const [count, setCount] = useState(bags)
+    const [count, setCount] = useState(0)
 
+    const navigate = useNavigate()
+    
+    
     useEffect(()=>{
         handleUpdateBags(count)
+        if(count > 0 ) processBagUpdate()
+        navigate('/home')
         return ()=>console.log('Bags unmount count:', count)
     },[count])
 
@@ -19,6 +29,7 @@ const Bags = () => {
         setCount(function (prevCount) {
           return (prevCount += 1);
         });
+        
       }
   
       function decrement() {
@@ -29,6 +40,24 @@ const Bags = () => {
             return (prevCount = 0);
           }
         });
+        
+      }
+
+      function processBagUpdate(){
+        // Get the Array item which matchs the id "2"
+        if(count == 0 ){
+          let bag = findBagItemInLSItems()
+          if (index) removeItemFromCollectionLSById(bag.entry_id)
+
+        }
+        var info = prices.find(item => item.id === 145);
+        let item = itemBuilder(info,1,1)
+        item.quantity = count
+        item.calculated_price= info.calculated_price * count
+        item.order=count
+        console.log('process bag' , item)
+        upsertCollectionLS('items', item)
+
       }
 
   return (

@@ -22,23 +22,25 @@ const useStore = () => {
 
     }) 
     
-    return ()=>console.log('useStore unmount')
+    return ()=>console.log('unmount Store prices', prices)
   }, [])
 
-  useEffect(()=>{
+ /*  useEffect(()=>{
 
-    console.log('effect items changed', items)
+    const ls = JSON.parse(localStorage.getItem('items'))
+
+      console.log('effect items changed', ls)
 
 
-  
-  return ()=>console.log('unmount items changed', items)
-}, [items])
+    
+    return ()=>console.log('unmount items changed', items)
+  }, [localStorage.getItem('items')]) */
 
 //on startup
-  console.log('Store on')
+  //console.log('Store on')
   //console.log('Store prices', prices)
 
-  console.log('Store bags>>', bags)
+  //console.log('Store bags>>', bags)
   
   const loadState = (bool)=>setLoading(bool)
   const setPriceList = (prices)=>setPrices(prices)

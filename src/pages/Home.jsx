@@ -1,14 +1,32 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import RenderListItem from '../components/RenderListItem'
 import useStore from '../context/hooks/useStore'
 import { useNavigate } from 'react-router-dom'
+import { getLocalStorageCollectionDataByKey, getCartValue } from '../utils/functions'
 
 const Home = () => {
 
-  const { prices } = useStore()
+  const { prices, bags } = useStore()
+
+  const [items, setItems] = useState([])
+
+  
   const navigate = useNavigate()
   
-  console.log('Home', prices.current)
+ 
+
+  useEffect(()=>{
+
+    getLocalStorageCollectionDataByKey('items').then(res=>{
+        console.log('home effect local storage items changed', res)
+        setItems(res)
+    })
+          
+      
+    return ()=>console.log('home effect unmount items changed', items)
+  }, [localStorage.getItem('items')])
+
+  
     
   return (
     <>
@@ -19,9 +37,20 @@ const Home = () => {
                 <span className="text-white text-lg pl-3">Cliente: 58659</span>  
                 
                 <span className="text-white text-lg pl-3">26/12/2022</span>  
+
+                <span className="text-white text-lg pl-3">{bags}</span> 
             </div>
-            <div>
-                <RenderListItem/>
+            <div className='flex flex-col w-full items-center justify-center'>
+                {Array.from(items).length>0
+                ? items.map((el,i)=><RenderListItem key={i} item={el}/>)
+            :
+              
+                <span className='text-blue font-thin text-3xl px-3 w-[16rem] my-3'>Passa i prodotti nello scanner...</span>
+
+               
+            
+            }
+                
             </div>
 
         </div>
@@ -46,7 +75,7 @@ const Home = () => {
                 <img  className="  h-[8rem] p-3 " src='/scanner.gif'/>
                 <div className=" flex flex-col w-full ">
                     <span className='text-blue font-thin text-3xl px-3 self-center w-[16rem] my-3'>Il scanner non legge il prodotto?</span>
-                    <button className='bg-orange-600  py-2 mx-2 rounded-lg shadow-xl text-white font-semibold w-[14rem] text-2xl'
+                    <button className='bg-indigo-500  py-2 mx-2 rounded-lg shadow-xl text-white font-semibold w-[14rem] text-2xl'
                     onClick={()=>navigate('/search')}>CLICCA
                     </button>
                 </div>   
@@ -94,7 +123,8 @@ const Home = () => {
             </div>
 
             <div className=" flex flex-row h-fit items-center justify-center border-zinc-600 bg-white shadow-lg rounded-2xl  w-full ">
-                    <span className='text-zinc-900 font-normal text-4xl text-center py-3 '> $ 12,90</span>
+                <span className='text-zinc-900 font-normal text-4xl text-center py-3 px-1 '> € </span>
+                    <span className='text-zinc-900 font-normal text-4xl text-center py-3 '> {getCartValue(items).toFixed(2)}</span>
             </div>
             
             <button className='bg-teal-600  py-6 mx-2 rounded-lg shadow-md text-white font-semibold w-full text-2xl'>PROCEDI COL PAGAMENTO

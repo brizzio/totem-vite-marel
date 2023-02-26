@@ -1,11 +1,11 @@
 import React , {useState, useEffect} from 'react'
 
-const RenderListItem = () => {
+const RenderListItem = ({item}) => {
     //console.log('list item: ', item)
 
     //console.log('index', index.toString())
 
-    const item = {
+    /* const item = {
         id: 1,
         price_date: "Fri Feb 24 2023 15:21:21 GMT-0300 (Horário Padrão de Brasília)",
         internal_code: "101101",
@@ -27,9 +27,9 @@ const RenderListItem = () => {
         references_id: null,
         image: null,
         order:'1/1',
-      }
+      } */
 
-    var total = parseFloat(item.calculatedPrice)
+    var total = item.calculated_price?parseFloat(item.calculated_price):0
     var priceType = item.promo_type>0?"P":"R"
 
     return (

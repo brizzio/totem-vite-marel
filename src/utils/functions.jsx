@@ -15,6 +15,10 @@ return  new Date(utcTime).toISOString().replace(/\D/g, '');
 
 }
 
+export const alphaIdGenerator = ()=>{
+  return (+new Date).toString(36).slice(-6) + "-" + Math.random().toString(36).slice(-3)
+}
+
 export const getLocalStorageCollectionDataByKey = async (key) => {
 
     try {
@@ -35,7 +39,31 @@ export const getLocalStorageCollectionDataByKey = async (key) => {
 };
 
 
-export const getLocalStorageKey = async (key) => {
+function isObjEmpty (obj) {
+  return Object.keys(obj).length === 0;
+}
+
+
+export function deviceId()
+    {
+    var iPageTabID = sessionStorage.getItem("deviceId");
+      // if it is the first time that this page is loaded
+    if (iPageTabID == null)
+        {
+        var iLocalTabID = localStorage.getItem("deviceId");
+          // if tabID is not yet defined in localStorage it is initialized to 1
+          // else tabId counter is increment by 1
+        var iPageTabID = (iLocalTabID == null) ? alphaIdGenerator() : iLocalTabID;
+          // new computed value are saved in localStorage and in sessionStorage
+        
+          localStorage.setItem("deviceId",iPageTabID);
+
+          return iPageTabID;
+        
+        }
+    }
+
+export const getLocalStorageKeySync = (key) => {
 
     try {
         var existing = localStorage.getItem(key);
@@ -47,10 +75,8 @@ export const getLocalStorageKey = async (key) => {
         return existing;
 
     } catch (error) {
-        console('getLocalStorageCollectionDataByKey error', error)
+        console('getLocalStorageKeySync error', error)
     }
-   
-    
 
 };
 

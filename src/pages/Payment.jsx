@@ -36,6 +36,8 @@ const ChoosePaymentComponent = ({total}) =>{
 
     const {bags} = useStore()
 
+    const navigate = useNavigate()
+
 
 
     const PaymentCard = ({icon, title, id}) =>{
@@ -52,6 +54,7 @@ const ChoosePaymentComponent = ({total}) =>{
 
     if(paymentMethod == 1) return(<Bancomat view={setPaymentMethod}/>)
     if(paymentMethod == 4) return(<PrintTicket view={setPaymentMethod}/>)
+    if(paymentMethod == 5) navigate('flow-end')
 
     return(
     <div className='flex flex-col items-start justify-start  border-zinc-600 w-1/2 bg-white mx-2 mt-4 rounded-tl-2xl rounded-tr-2xl'>
@@ -80,8 +83,8 @@ const ChoosePaymentComponent = ({total}) =>{
                     <span className='text-zinc-900 font-normal text-4xl text-center py-3 '> {total.toFixed(2)}</span>
         </div>
 
-        <div className=" flex flex-row h-fit items-center justify-center border-zinc-600 bg-teal-300 shadow-xl rounded-2xl  w-fit mt-4 mx-4 px-[4.5rem] py-6">
-                    <span className='text-sky-700 font-thin text-3xl text-center py-3 '> Torna indietro per aggiungere altri prodotti</span>
+        <div onClick={()=>navigate('/home')} className=" flex flex-row h-fit items-center justify-center border-zinc-600 bg-teal-800 shadow-xl rounded-2xl  w-fit mt-4 mx-4 px-[4.5rem] py-6">
+                    <span className='text-white font-thin text-3xl text-center py-3 '> Torna indietro per aggiungere altri prodotti</span>
         </div>
         
     </div>
@@ -149,7 +152,7 @@ const Bancomat = (props)=>{
         return ()=>{
             console.log('PrintTicket effect unmount navigate')
             setTimeout(() => {
-                //alert('finalize')
+                navigate('/flow-end')
              }, 3000)
         }
       },[])
@@ -169,11 +172,11 @@ const Bancomat = (props)=>{
       <div className="flex flex-row h-full w-full items-center gap-4 ml-2">
 
         <div className="flex flex-col h-[12rem] items-center justify-center p-4 text-2xl bg-stone-600 rounded-xl shadow-lg">
-            <i class="fa-solid fa-print fa-2x text-white"></i>
+            <i className="fa-solid fa-print fa-2x text-white"></i>
             <span className='text-white font-thin text-3xl text-center py-3 px-3 w-[10rem]'>Stampato, per favore </span>
         </div>
         <div className="flex flex-col h-[12rem] w-[22rem] items-center justify-center p-4 text-2xl bg-green-600 rounded-xl shadow-lg">
-            <i class="fa-solid fa-leaf fa-2x text-white"></i>
+            <i className="fa-solid fa-leaf fa-2x text-white"></i>
             <span className='text-white font-thin text-3xl text-center py-3 px-3 w-[18rem]'>Nel mio cellulare, cosí proteggiamo l'ambiente </span>
         </div>
           

@@ -48,7 +48,9 @@ const InputFiscalCode = () => {
         onClick={()=>navigate('/home')}>
             NO, GRAZIE
           </button>
-        
+
+          
+          <img  className=" absolute bottom-1 left-0 p-2 w-28 " src='/marel-logo.png'/>
           <BizerbaLogoSVG cn="absolute bottom-0 right-0 pr-3"/> 
       </div>
           

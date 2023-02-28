@@ -16,6 +16,7 @@ import Payment from './pages/Payment';
 //utils
 import api from './api/api';
 import useStore from './context/hooks/useStore';
+import Greetings from './pages/flow/Greetings';
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
         <Routes>
           <Route index element={<Welcome/>} />
           <Route path="/flow-1" element={<InputFiscalCode/>} />
+          <Route path="/flow-end" element={<Greetings />} />
           <Route element={<MainLayout/>}>
             <Route path="/home" element={<Home bags={bags}/>} />
             <Route path="/payment" element={<Payment />} />

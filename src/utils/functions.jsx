@@ -80,29 +80,34 @@ export const findBagItemInLSItems = async ()=>{
     const index = data.findIndex(obj => {
         return obj.id === 145;
       });
-      console.log('findBagItemInLSItems',index); // 👉️ -1
+      //console.log('findBagItemInLSItems', data[index]); // 👉️ -1
+      //console.log('findBagItemInLSItems', index, index > -1); // 👉️ -1
       
-      if (index !== -1) {
-        res = data[index] 
-      }
+      return index > -1?data[index]:undefined
+
       
-      return res
+      
 
 }
 
 
-export const removeItemFromCollectionLSById = async (collection, entryId)=>{
+export const removeItemFromCollectionLSById = async (entryId, collection)=>{
 
-    let data = await getLocalStorageCollectionDataByKey(collection)
+
+    const col = collection? collection:'items'
+
+    let data = await getLocalStorageCollectionDataByKey(col)
 
     const index = data.findIndex(obj => {
-        return obj.entry_id === entryId;
+       
+        return obj.entry_id == entryId;
       });
+      console.log('removeItem id',entryId, entryId==entryId);
       console.log('removeItem',index); // 👉️ -1
       
-      if (index !== -1) {
+      if (index > -1) {
         data.splice(index,1)
-        localStorage.setItem(collection, JSON.stringify(data))
+        localStorage.setItem('items', JSON.stringify(data))
       }
       
 

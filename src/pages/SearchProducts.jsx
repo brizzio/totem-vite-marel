@@ -11,14 +11,14 @@ const SearchProducts = () => {
     const [code, setCode] = useState('')
     const [found, setFound] = useState({})
 
-    const {prices, addItem} = useStore()
+    const {prices} = useStore()
 
     const ref = useRef()
 
     const navigate = useNavigate()
 
     useEffect(()=>{
-        console.log('effect search products prices' , prices)
+        //console.log('effect search products prices' , prices)
     },[prices])
 
     const handleCodeChange = (code) =>{

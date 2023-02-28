@@ -4,21 +4,31 @@ import { upsertCollectionLS ,
         itemBuilder, 
         removeItemFromCollectionLSById, 
         findBagItemInLSItems} from '../utils/functions';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , useLocation } from 'react-router-dom';
 
-const Bags = () => {
+
+const Bags = ({counter}) => {
 
     const {bags, handleUpdateBags, prices} = useStore()
     
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(counter)
 
     const navigate = useNavigate()
+
+    let location = useLocation();
     
+    useEffect(()=>{
+      setCount(counter)
+    
+      return ()=>console.log('Bags unmount counter:', counter)
+    },[counter])
+
     
     useEffect(()=>{
         handleUpdateBags(count)
-        if(count > 0 ) processBagUpdate()
-        navigate('/home')
+        processBagUpdate()
+        console.log('location:', location)
+        navigate(location.pathname)
         return ()=>console.log('Bags unmount count:', count)
     },[count])
 
@@ -37,26 +47,43 @@ const Bags = () => {
           if (prevCount > 0) {
             return (prevCount -= 1); 
           } else {
-            return (prevCount = 0);
+            return 0;
           }
         });
         
       }
 
-      function processBagUpdate(){
+      async function processBagUpdate (){
         // Get the Array item which matchs the id "2"
-        if(count == 0 ){
-          let bag = findBagItemInLSItems()
-          if (index) removeItemFromCollectionLSById(bag.entry_id)
+        
+        let bagItem = await findBagItemInLSItems()
+        console.log('bagItem', bagItem)
 
+        console.log('count == 0', count , 0 , count == 0)
+        console.log('!bagItem', !bagItem)
+        console.log('!!bagItem', !!bagItem)
+
+        console.log('count == 0 && !!bagItem ', count == 0 && !!bagItem )
+
+        if(count == 0 && !bagItem) return;
+
+        if(count == 0 && !!bagItem ){
+          console.log('count is zero', count , 0 , count == 0)
+          findBagItemInLSItems().then(res=>{
+              if (res) removeItemFromCollectionLSById(res.entry_id)
+          })
+          console.log('processBagUpdate before return', count)
+          return;
         }
+        if(count > 0 ){
         var info = prices.find(item => item.id === 145);
         let item = itemBuilder(info,1,1)
         item.quantity = count
-        item.calculated_price= info.calculated_price * count
+        item.calculated_price= info.regular_price * count
         item.order=count
         console.log('process bag' , item)
         upsertCollectionLS('items', item)
+        }
 
       }
 

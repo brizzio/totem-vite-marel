@@ -1,6 +1,7 @@
 import React , {useState, useEffect} from 'react'
 import { Outlet } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import useStore from '../context/hooks/useStore';
 
 import LotteryIconSVG from '../components/common/LotteryIconSVG';
 import BizerbaLogoSVG from '../components/common/BizerbaLogoSVG';
@@ -11,6 +12,8 @@ const MainLayout = () => {
 
     const [location, setLocation] = useState(window.location)
     console.log(location.pathname)
+
+    const {bags} = useStore()
 
     const navigate = useNavigate()
 
@@ -49,7 +52,7 @@ const MainLayout = () => {
                 <button className='flex items-center text-xl  rounded-lg h-fit py-1 px-3 shadow-md bg-white bg-opacity-20 backdrop-blur-lg drop-shadow-lg '><i className="fa-solid fa-handshake-angle fa-2x pr-3 "></i>RICHIEDI ASSISTENZA
                 </button>
 
-                <Bags/>
+                <Bags counter={bags}/>
             </div>
             
 

@@ -10,13 +10,16 @@ const useStore = () => {
   
   const [loading, setLoading] = useState(true)
   const [bags, setBags] = useState(0)
+
   
   const [prices, setPrices] = useState([])
   const [items, setItems] = useState([])
 
+  
+
   useEffect(()=>{
       api.get('priceList').then(result => {
-      //localStorage.setItem('prices', JSON.stringify(result))
+      localStorage.setItem('prices', JSON.stringify(result))
       setPrices(result)
       setLoading(false)
 
@@ -46,6 +49,8 @@ const useStore = () => {
   const setPriceList = (prices)=>setPrices(prices)
   
   const handleUpdateBags=(numberOfBags)=>setBags(numberOfBags)
+
+  
 
   
     

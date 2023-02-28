@@ -13,7 +13,7 @@ const Home = () => {
   
   const navigate = useNavigate()
   
- 
+ //console.log(prices)
 
   useEffect(()=>{
 
@@ -26,7 +26,13 @@ const Home = () => {
     return ()=>console.log('home effect unmount items changed', items)
   }, [localStorage.getItem('items')])
 
-  
+  const payment = ()=>{
+
+    console.log('payment')
+    navigate('/payment')
+
+
+  }
     
   return (
     <>
@@ -127,7 +133,8 @@ const Home = () => {
                     <span className='text-zinc-900 font-normal text-4xl text-center py-3 '> {getCartValue(items).toFixed(2)}</span>
             </div>
             
-            <button className='bg-teal-600  py-6 mx-2 rounded-lg shadow-md text-white font-semibold w-full text-2xl'>PROCEDI COL PAGAMENTO
+            <button className={`bg-teal-600  py-6 mx-2 rounded-lg shadow-md text-white font-semibold w-full text-2xl ${getCartValue(items)== 0?'disabled':''}`}
+            onClick={payment}>PROCEDI COL PAGAMENTO
             </button>
 
         

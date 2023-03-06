@@ -38,7 +38,7 @@ const ChoosePaymentComponent = ({total}) =>{
 
     const navigate = useNavigate()
 
-
+    const updatePaymentMethod = (n)=>setPaymentMethod(n)
 
     const PaymentCard = ({icon, title, id}) =>{
 
@@ -52,8 +52,10 @@ const ChoosePaymentComponent = ({total}) =>{
     
     }
 
-    if(paymentMethod == 1) return(<Bancomat view={setPaymentMethod}/>)
-    if(paymentMethod == 4) return(<PrintTicket view={setPaymentMethod}/>)
+    console.log('paymentMethod', paymentMethod)
+    
+    if(paymentMethod == 1) return(<Bancomat view={updatePaymentMethod}/>)
+    if(paymentMethod == 4) return(<PrintTicket view={updatePaymentMethod}/>)
     if(paymentMethod == 5) navigate('flow-end')
 
     return(

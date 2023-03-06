@@ -9,6 +9,7 @@ const Home = () => {
   const { prices, bags } = useStore()
 
   const [items, setItems] = useState([])
+  const [total, setTotal] = useState(0)
 
   
   const navigate = useNavigate()
@@ -19,8 +20,12 @@ const Home = () => {
 
     getLocalStorageCollectionDataByKey('items').then(res=>{
         console.log('home effect local storage items changed', res)
+
+        let sumItemsCalculatedPrice = getCartValue(res)
+        setTotal(sumItemsCalculatedPrice)
         setItems(res)
     })
+
           
       
     return ()=>console.log('home effect unmount items changed', items)
@@ -33,6 +38,8 @@ const Home = () => {
 
 
   }
+
+  
     
   return (
     <>
@@ -130,10 +137,10 @@ const Home = () => {
 
             <div className=" flex flex-row h-fit items-center justify-center border-zinc-600 bg-white shadow-lg rounded-2xl  w-full ">
                 <span className='text-zinc-900 font-normal text-4xl text-center py-3 px-1 '> € </span>
-                    <span className='text-zinc-900 font-normal text-4xl text-center py-3 '> {getCartValue(items).toFixed(2)}</span>
+                    <span className='text-zinc-900 font-normal text-4xl text-center py-3 '> {total.toFixed(2)}</span>
             </div>
             
-            <button className={`bg-teal-600  py-6 mx-2 rounded-lg shadow-md text-white font-semibold w-full text-2xl ${getCartValue(items)== 0?'disabled':''}`}
+            <button className={`bg-teal-600  py-6 mx-2 rounded-lg shadow-md text-white font-semibold w-full text-2xl ${total == 0?'disabled':''}`}
             onClick={payment}>PROCEDI COL PAGAMENTO
             </button>
 

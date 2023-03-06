@@ -3,12 +3,15 @@ import React, { useRef, useState } from 'react'
 import BizerbaLogoSVG from '../../components/common/BizerbaLogoSVG'
 import { useNavigate } from 'react-router-dom'
 import NumericKb from '../../components/common/NumericKb'
+import useStore from '../../context/hooks/useStore'
 
 const InputFiscalCode = () => {
 
     const [code, setCode] = useState('')
 
     const ref=useRef()
+
+    const { updateFiscalCode }= useStore()
 
     const navigate = useNavigate()
 
@@ -17,6 +20,16 @@ const InputFiscalCode = () => {
         if (code === '') ref.current.clearInput()
         setCode(code)
     }
+
+    const handleEnter = (code) =>{
+      console.log('handle Enter', code)
+
+      if (code !== '') {
+        updateFiscalCode(code)
+        navigate('/home')
+
+      }
+  }
 
 
 
@@ -41,7 +54,7 @@ const InputFiscalCode = () => {
 
           </div>
   
-         <NumericKb ref={ref} inputValue={code} change={handleCodeChange}/>
+         <NumericKb ref={ref} inputValue={code} change={handleCodeChange} onEnter={handleEnter}/>
         </div>
   
         <button className="bg-orange-500  text-2xl rounded-full py-4 px-20 shadow-lg uppercase tracking-wider text-white"

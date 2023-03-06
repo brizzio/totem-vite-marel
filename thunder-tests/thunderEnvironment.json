@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "_id": "ccf2545f-cb47-4ad2-89f0-fc24d2dfaea5",
+    "name": "gas",
+    "default": true,
+    "sortNum": 10000,
+    "created": "2023-03-03T19:34:44.470Z",
+    "modified": "2023-03-03T19:34:44.470Z",
+    "data": [
+      {
+        "name": "scriptKey",
+        "value": "AKfycbxj3LqwIw1Sg3hFKXZC2g39y8D26Zd0xyCPypGEOhXUJUbdBli0_ZTVYTp1gdPEtgNpMg"
+      }
+    ]
+  }
+]

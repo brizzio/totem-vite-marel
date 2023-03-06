@@ -46,6 +46,7 @@ const handleShift = () => {
 const handleEnter = () => {
   //console.log('keyboard says: ', input.default)
   //console.log("input no done", input);
+  props.onEnter(input)
   clear('')
 };
 

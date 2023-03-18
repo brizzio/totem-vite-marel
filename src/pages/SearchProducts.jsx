@@ -3,19 +3,32 @@ import NumericKb from '../components/common/NumericKb'
 import useStore from '../context/hooks/useStore'
 import { useNavigate } from 'react-router-dom'
 
-import { addItemToCollectionLS, itemBuilder } from '../utils/functions'
+import { addItemToCollectionLS, itemBuilder, getLocalStorageCollectionDataByKey } from '../utils/functions'
 
 //https://codesandbox.io/s/react-input-autocomplete-knwn3?file=/src/InputAuto.js
 
 const SearchProducts = () => {
     const [code, setCode] = useState('')
     const [found, setFound] = useState({})
+    
+    const cart = useRef()
 
     const {prices} = useStore()
 
     const ref = useRef()
 
     const navigate = useNavigate()
+
+    //get cart data
+    useEffect(()=>{
+
+        getLocalStorageCollectionDataByKey('cart').then(res=>{
+            console.log('SearchProducts effect local storage cart', res)
+            cart.current = res
+        })
+          
+        return ()=>console.log('SearchProducts effect unmount', cart)
+      }, [])
 
     useEffect(()=>{
         //console.log('effect search products prices' , prices)
@@ -41,8 +54,11 @@ const SearchProducts = () => {
     }
 
     const addToCart = async () =>{
-        console.log('addToCart', code)
+        console.log('addToCart', code, cart)
         let item = await itemBuilder(found,1,1)
+        item.cart_id=cart.current.id
+        item.device_id=cart.current.device_id
+        item.store_id=cart.current.store_id
         addItemToCollectionLS('items', item)
         setFound({})
         setCode('')
@@ -87,7 +103,10 @@ const SearchProducts = () => {
 
                 </div>
 
-                    <NumericKb ref={ref} inputValue={code} change={handleCodeChange}/>
+                    <NumericKb ref={ref} 
+                               inputValue={code} 
+                               change={handleCodeChange} 
+                               onEnter={(v)=>console.log(v)}/>
                 
         </>
 

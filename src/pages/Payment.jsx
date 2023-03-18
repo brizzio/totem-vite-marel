@@ -3,6 +3,8 @@ import CartList from '../components/List Displayers/Cart Items List Displayer/Ca
 import Bags from '../components/Bags'
 import useStore from '../context/hooks/useStore'
 import { useNavigate } from 'react-router-dom'
+import { getLocalStorageCollectionDataByKey } from '../utils/functions'
+import {insertData, fetchData} from '../api/api'
 
 
 
@@ -107,11 +109,20 @@ const ChoosePaymentComponent = ({total}) =>{
 const Bancomat = (props)=>{
 
     const navigate = useNavigate()
+    
 
     useEffect(()=>{
 
         
-            console.log('bancomat effect')
+            console.log('save cart')
+
+            getLocalStorageCollectionDataByKey('items').then((res)=>{
+                fetchData('totem', Array.from(res))
+
+            })
+
+
+
            
           
         return ()=>{

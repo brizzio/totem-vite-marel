@@ -76,7 +76,7 @@ const Bags = ({counter}) => {
           return;
         }
         if(count > 0 ){
-        var info = prices.find(item => item.id === 145);
+        var info = prices.find(item => item.product_id === 145);
         let item = itemBuilder(info,1,1)
         item.quantity = count
         item.calculated_price= info.regular_price * count

@@ -40,7 +40,7 @@ const useStore = () => {
 
     }) 
     
-    return ()=>console.log('unmount Store prices', prices)
+    return ()=>console.log('unmount Store prices')
   }, [])
 
 

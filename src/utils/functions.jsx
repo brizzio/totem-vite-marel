@@ -178,19 +178,27 @@ export const updateLocalStorageItem = async (key, keyValueObj)=>{
 
 }
 
-export const itemBuilder = (item, index, quantity)=>{
+export const itemBuilder = async(item, index, quantity)=>{
     
-    let date =new Date()
-    let utcTime = date.getTime() + date.getTimezoneOffset()
+    try {
 
-    item.entry_id = idFromMillis()
-    item.deleted = false
-    item.date_added= formatDate(date)
-    item.time_added= utcTime
-    item.order=`${index}/${quantity}`
-    item.quantity=index
-    console.log(item)
-    return item
+      let date =new Date()
+      let utcTime = date.getTime() + date.getTimezoneOffset()
+
+      item.entry_id = Math.random()
+      item.deleted = false
+      item.date_added= formatDate(date)
+      item.time_added= utcTime
+      item.order=`${index}/${quantity}`
+      item.quantity=index
+      console.log('itemBuilder', item)
+      return item
+
+      
+    } catch (error) {
+      console.log('item builder error', error)
+    }
+    
 
     
     
@@ -211,6 +219,25 @@ export const getCartValue = (items) =>{
 //HELPERS
 //====================================================
 
+const add = (function () {
+  let counter = 1;
+  return function () {counter += 1; return counter}
+})();
+
+
+async function uuid() {
+  try {
+    return 'xxxxxxyxx-xxxx-yxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+  } catch (error) {
+    console.log('uuid error', error)
+  }
+  
+}
+
+console.log('unique', uuid)
 
 // ✅ Format a date to YYYY-MM-DD (or any other format)
 function padTo2Digits(num) {

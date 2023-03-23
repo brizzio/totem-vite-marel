@@ -1,6 +1,6 @@
 import React , {useState, useEffect} from 'react'
 
-const RenderListItem = ({item}) => {
+const RenderListItem = (props) => {
     //console.log('list item: ', item)
 
     //console.log('index', index.toString())
@@ -29,8 +29,14 @@ const RenderListItem = ({item}) => {
         order:'1/1',
       } */
 
+    const { item, onTrashClick}  = props
+    
+
     var total = item.calculated_price?parseFloat(item.calculated_price):0
     var priceType = item.promo_type>0?"P":"R"
+
+   
+    
 
     return (
     <div className='flex flex-row w-full px-3 py-0.5 items-center justify-between text-xs text-gray-900 border-b border-gray-400'>
@@ -48,8 +54,8 @@ const RenderListItem = ({item}) => {
                 <span>{item.currency}</span>
                 <span>{total.toFixed(2)}</span>
                 <span className="px-2">{priceType}</span> 
-                <button id={item.entryID} 
-                        onClick={event=>removeItemFromCart(event)}>
+                <button id={item.entry_id} 
+                        onClick={onTrashClick}>
                     <i className="fa-regular fa-trash-can"></i>
                 </button>
             </div>          

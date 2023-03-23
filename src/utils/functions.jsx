@@ -19,6 +19,23 @@ export const alphaIdGenerator = ()=>{
   return (+new Date).toString(36).slice(-6) + "-" + Math.random().toString(36).slice(-3)
 }
 
+
+export const readLocalStorage = async (key) => {
+  return new Promise((resolve, reject) => {
+      
+  let result = localStorage.getItem(key)  
+  
+  if (result === undefined) {
+      reject();
+  } else {
+      resolve(JSON.parse(result));
+  }
+   
+  });
+};
+
+
+
 export const getLocalStorageCollectionDataByKey = async (key) => {
 
     try {
@@ -244,7 +261,7 @@ function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
   }
   
-  function formatDate(date) {
+  export function formatDate(date) {
     return [
       date.getFullYear(),
       padTo2Digits(date.getMonth() + 1),

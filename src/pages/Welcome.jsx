@@ -10,12 +10,12 @@ const Welcome = () => {
 
     const navigate = useNavigate()
 
-    const {initCart} = useStore()
 
-    const {init} = useSession()
+    const {start} = useSession()
 
     const handleInit = () =>{
-      init()
+      console.log('calling init')
+      
       navigate('/flow-1')
     }
     

@@ -3,6 +3,8 @@ import React, { useState, useRef, useEffect, useMemo } from 'react'
 import useStore from './useStore'
 
 import { addItemToCollectionLS, itemBuilder, getLocalStorageCollectionDataByKey } from '../../utils/functions'
+import usePrices from './usePrices'
+
 
 //https://codesandbox.io/s/react-input-autocomplete-knwn3?file=/src/InputAuto.js
 
@@ -12,9 +14,10 @@ const useCart = () => {
     
     const [cart , setCart] = useState({})
 
-    const {prices} = useStore()
+    const [prices] = usePrices()
 
-    
+    console.log('useCart prices', prices)
+
     //get cart data
     useEffect(()=>{
 

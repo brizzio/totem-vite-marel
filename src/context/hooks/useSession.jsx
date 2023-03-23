@@ -1,18 +1,6 @@
 import React, { useState, useEffect , useRef, useReducer} from 'react'
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+import { formatDate } from '../../utils/functions';
 
 
   function deviceId()
@@ -31,13 +19,26 @@ import React, { useState, useEffect , useRef, useReducer} from 'react'
         
     }
 
+
+    let sessionModel =  {
+            exists:false,
+        data:{
+            date:'',
+            id:'',
+            device_id:'',
+            timestamp:'',
+            opened_at:'',
+            closed_at:'' 
+        }
+    }
+
   const useSession = () => {
 
     
     const sessionReducer = (state, action) => {
 
     
-        console.log('session reducer' ,state, action)
+        console.log('session reducer' , state, action)
         
         
         switch (action.type) {
@@ -49,22 +50,25 @@ import React, { useState, useEffect , useRef, useReducer} from 'react'
             let date =new Date()
             let utcTime = date.getTime() + date.getTimezoneOffset()
     
-            formattedDate = [
-                utcTime.getFullYear(),
-                (utcTime.getMonth() + 1).toString().padStart(2, '0'),
-                utcTime.getDate().toString().padStart(2, '0'),
-              ].join('-')
+            let formattedDate = formatDate(new Date(utcTime))
     
-            session = {
+            let newSession = {
                 date:formattedDate,
                 session_id:crypto.randomUUID(),
                 device_id:deviceId(),
                 timestamp:new Date(utcTime).toISOString().replace(/\D/g, '')
             }
+
+            localStorage.setItem('session', JSON.stringify({
+                exists:true,
+                data:newSession
+            }))
+
             
             return {
                 ...state,
-                ...session
+                exists:true,
+                data:newSession
                 
             }
     
@@ -77,19 +81,24 @@ import React, { useState, useEffect , useRef, useReducer} from 'react'
                     
                 }
     
-          /* case 'REMOVE':
-            var item = state.list[action.key]
-            console.log('to delete', item)
-            return {
-              ...state,
-              //list: state.list.filter((item) => item.entry_id !== action.id),
-              list:state.list.map((el,i)=>
-                  i==action.key
-                  ?{...el, deleted:true}
-                  :el
-              )
+            case 'CLOSE':
+
+            console.log('close session ')
+            localStorage.removeItem('session')
             
-            }; */
+            let closeDate = new Date(date.getTime() + date.getTimezoneOffset()).toISOString()
+
+            var closedSession = {
+                ...state,
+                //list: state.list.filter((item) => item.entry_id !== action.id),
+                exists:false,
+                data: {...data, closed_at:closeDate}
+              
+              }; 
+            
+            localStorage.setItem('closed_session', closedSession)
+           
+            return closedSession; 
     
           
           default:
@@ -99,21 +108,43 @@ import React, { useState, useEffect , useRef, useReducer} from 'react'
         
       };
 
-      const [session, dispatchSession] = useReducer(sessionReducer,{
-        date:'',
-        id:'',
-        device_id:'',
-        timestamp:''
-    })
 
-    const init = ()=>dispatchSession({type:'CREATE'})
 
-    const load = ()=>dispatchSession({type:'LOAD'})
+      const [session, dispatchSession] = useReducer(sessionReducer, sessionModel)
+
+
+    console.log('session',session)
+
+    const readLocalStorage = async (key) => {
+        return new Promise((resolve, reject) => {
+            
+        let result = localStorage.getItem(key)  
         
-       
+        if (result === undefined) {
+            reject();
+        } else {
+            resolve(JSON.parse(result));
+        }
+         
+        });
+      };
 
 
+    const evaluate = async ()=>{
+        var sessionInStorage = await readLocalStorage("session");
+        console.log('useSession sessionInStorage', sessionInStorage, sessionInStorage==null)
+        if (sessionInStorage == null){
+            console.log('usSession init create new session')
+            dispatchSession({type:'CREATE'})
+            
+            }else{
+            
+            if( !session.exists ) dispatchSession({type:'LOAD', data:sessionInStorage})
+    
+            }
+    }
 
+    evaluate()
 
     /* const init = ()=>{
 
@@ -137,7 +168,7 @@ import React, { useState, useEffect , useRef, useReducer} from 'react'
 
     }
  */
-    return {session, init, load}
+    return {session}
 
   }
 

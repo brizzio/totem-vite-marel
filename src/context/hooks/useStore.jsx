@@ -2,6 +2,7 @@ import React, {useState, useRef, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import api from '../../api/api'
 import { useLocation } from 'react-router-dom';
+//import usePrices from "./usePrices";
 
 import { alphaIdGenerator, 
          getLocalStorageKeySync,
@@ -17,7 +18,7 @@ const useStore = () => {
   
 
   
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [bags, setBags] = useState(0)
 
   
@@ -28,11 +29,11 @@ const useStore = () => {
 
   const [fiscalCode, setFiscalCode] =useState({})
 
-  
+  //const {prices} = usePrices()
 
   
 
-  useEffect(()=>{
+ /*  useEffect(()=>{
       api.get('priceList').then(result => {
       localStorage.setItem('prices', JSON.stringify(result))
       setPrices(result)
@@ -43,14 +44,13 @@ const useStore = () => {
     return ()=>console.log('unmount Store prices')
   }, [])
 
-
+ */
  
 
   
   
   const loadState = (bool)=>setLoading(bool)
 
-  const setPriceList = (prices)=>setPrices(prices)
   
   const handleUpdateBags=(numberOfBags)=>setBags(numberOfBags)
 
@@ -120,7 +120,7 @@ const useStore = () => {
       items,
       addItem,
       loadState,
-      setPriceList,
+     
       bags,
       handleUpdateBags,
       initCart,

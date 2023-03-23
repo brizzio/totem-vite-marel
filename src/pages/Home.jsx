@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import { getLocalStorageCollectionDataByKey, getCartValue } from '../utils/functions'
 
 import useCart from '../context/hooks/useCart'
+import usePrices from '../context/hooks/usePrices'
+
+
 
 
 
@@ -55,6 +58,7 @@ const listReducer = (state, action) => {
 const Home = () => {
 
   const { bags } = useStore()
+  const [ prices , loading ] = usePrices()
 
   const [listData, dispatchListData]=useReducer(listReducer,{
     list:[],
@@ -76,7 +80,7 @@ const Home = () => {
   const { addItem } = useCart()
   
  //console.log('hasSerial', hasSerial.current)
- //console.log('prices', prices)
+ console.log('loading', loading)
 
   
 

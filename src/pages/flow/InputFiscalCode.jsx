@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react'
 import BizerbaLogoSVG from '../../components/common/BizerbaLogoSVG'
 import { useNavigate } from 'react-router-dom'
 import NumericKb from '../../components/common/NumericKb'
-import useStore from '../../context/hooks/useStore'
+
 
 const InputFiscalCode = () => {
 
@@ -11,7 +11,7 @@ const InputFiscalCode = () => {
 
     const ref=useRef()
 
-    const { updateFiscalCode }= useStore()
+  
 
     const navigate = useNavigate()
 
@@ -25,8 +25,8 @@ const InputFiscalCode = () => {
       console.log('handle Enter', code)
 
       if (code !== '') {
-        updateFiscalCode(code)
-        navigate('/home')
+        
+        navigate('/home', { state: { code } })
 
       }
   }

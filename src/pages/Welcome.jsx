@@ -2,20 +2,15 @@ import React from 'react'
 import IdiomSelector from '../components/common/IdiomSelector'
 import BizerbaLogoSVG from '../components/common/BizerbaLogoSVG'
 import { useNavigate } from 'react-router-dom'
-import useStore from '../context/hooks/useStore'
-import useSession from '../context/hooks/useSession'
+
 
 
 const Welcome = () => {
 
     const navigate = useNavigate()
 
-
-    const {start} = useSession()
-
     const handleInit = () =>{
       console.log('calling init')
-      
       navigate('/flow-1')
     }
     

@@ -3,8 +3,9 @@ import CartList from '../components/List Displayers/Cart Items List Displayer/Ca
 import Bags from '../components/Bags'
 import useStore from '../context/hooks/useStore'
 import { useNavigate } from 'react-router-dom'
-import { getLocalStorageCollectionDataByKey } from '../utils/functions'
+import { getLocalStorageCollectionDataByKey, readLocalStorage} from '../utils/functions'
 import {insertData, fetchData} from '../api/api'
+import useCart from '../context/hooks/useCart'
 
 
 
@@ -13,6 +14,32 @@ import {insertData, fetchData} from '../api/api'
 const Payment = () => {
 
     const [total, setTotal] = useState(0)
+    const [list, setList] = useState([])
+  
+
+    async function getData(){
+        var res = await readLocalStorage("currentCart")
+        console.log('res', res.items)
+        return res.items
+    }
+
+    
+    
+    useEffect(() => {
+      getData().then((list)=>{
+        setList(list)
+        setTotal(sum(list))
+      })
+    }, [])
+    
+    console.log('list', list)   
+    
+    
+    const sum = (arr) => arr.reduce((a,e)=>{
+        let val = e.deleted?0:e['calculated_price']
+        return a + val
+      },0).toFixed(2)
+   
 
 
 
@@ -20,7 +47,7 @@ const Payment = () => {
     <>
     
     <div className='flex flex-col items-start justify-start  border-zinc-600 w-1/2 bg-white mx-2 mt-4 rounded-tl-2xl rounded-tr-2xl'>
-        <CartList localStorageKey='items' totalizer={setTotal}/>
+        <CartList list={list} />
     </div>
     <ChoosePaymentComponent total={total}/>
     
@@ -87,7 +114,7 @@ const ChoosePaymentComponent = ({total}) =>{
         </div>
         <div className=" flex flex-row h-fit items-center justify-center border-zinc-600 bg-indigo-200 shadow-lg rounded-2xl  w-fit mt-4 px-[15rem] mx-4 ">
                 <span className='text-zinc-900 font-normal text-4xl text-center py-3 px-1 '> € </span>
-                    <span className='text-zinc-900 font-normal text-4xl text-center py-3 '> {total.toFixed(2)}</span>
+                    <span className='text-zinc-900 font-normal text-4xl text-center py-3 '> {total}</span>
         </div>
 
         <div onClick={()=>navigate('/home')} className=" flex flex-row h-fit items-center justify-center border-zinc-600 bg-teal-800 shadow-xl rounded-2xl  w-fit mt-4 mx-4 px-[4.5rem] py-6">

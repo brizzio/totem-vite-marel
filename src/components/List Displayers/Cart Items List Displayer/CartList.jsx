@@ -1,64 +1,39 @@
 import React , { useState , useEffect} from 'react'
-import { getLocalStorageCollectionDataByKey, removeItemFromCollectionLSById } from '../../../utils/functions'
-import CartListItem from './CartListItem'
+import { readLocalStorage } from '../../../utils/functions'
 
 const CartList = ({
-    localStorageKey, 
-    totalizer, 
-    back, 
-    confirm
+    list
 }) => {
 
     
-    const [list, setList] = useState([])
-    const [filtered, setFiltered] = useState([])
-    const [reload, setReload] = useState(0)
+    
+    
 
-    useEffect(()=>{
+    const cartListItem = (item, index)=>{
 
-        getLocalStorageCollectionDataByKey(localStorageKey).then(res=>{
-            console.log('CartList effect local storage items read', res)
-            setList(res)
-        })
-              
-          
-        return ()=>console.log('CartList effect unmount items changed', list)
-      },[])
-
-    useEffect(()=>{
-        let t = list.reduce((a, el)=>{  
-            console.log('reduce', a, el.calculated_price)
-            return a + Number(el.calculated_price)
-        },0)
-        totalizer(t)
-
-        return () => {
-            // Remove the handler when the component unmounts
-            console.log('effect total unmount', t)
-        };
-    },[list])
-
-
-    const filter = (filterObj) =>{
-        const {key, value} = filterObj
-        let selection = []
-        prices.filter(el => {
-            if(el[key]==value) selection.push(el)
-        })
-        console.log('selection',selection)
         
-        setFiltered(selection)
+        return(
+            <div key={index} className='flex flex-row h-[2rem] w-full items-center justify-between border border-2 rounded-lg '>
+                <div className='flex flex-row w-fit gap-6 items-center text-lg'>
+                    {/* <img className='h-[4rem]' src={item.image} alt="product image"/> */}
+                    <div className='w-fit '>{item.product_name}</div>
+                    
+                </div>
+                <div className='flex items-center justify-around w-[9rem]'>
+                    <div className='h-full w-fit  font-thin '>( {item.order} )</div>
+                    <div className='h-full w-fit  font-thin'>
+                        <span className='px-1'>{item.currency}</span> 
+                        <span className='font-semibold'>{item.calculated_price}</span> 
+                    </div>
+                     
+                </div>
+               
+            </div>
+            
+            
+        )
     }
-
-    const removeItem = async (entryId) =>{
-        console.log('removeItem entryId', entryId)
-        await removeItemFromCollectionLSById(entryId)
-        getLocalStorageCollectionDataByKey(localStorageKey).then(res=>{
-            console.log('removeItem local storage items read', res)
-            setList(res)
-        })
-
-    }
+    
 
    
     return(
@@ -74,10 +49,7 @@ const CartList = ({
         
         <div className='flex flex-col h-[25rem] w-full p-1 gap-2 overflow-y-auto [&::-webkit-scrollbar]:hidden'>
             
-            {list.map((el, i)=><CartListItem 
-                            key={i} 
-                            item={el} 
-                            trashAction={removeItem}/>)}     
+            {list.length && list.map((el, i)=> cartListItem(el, i))}     
 
         </div>
  

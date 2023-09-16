@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from "react";
-import { useNavigate } from "react-router-dom";
+
 import api from '../../api/api'
-import { useLocation } from 'react-router-dom';
+
 //import usePrices from "./usePrices";
 
 import { alphaIdGenerator, 
@@ -31,6 +31,8 @@ const useStore = () => {
 
   //const {prices} = usePrices()
 
+
+ 
   
 
  /*  useEffect(()=>{

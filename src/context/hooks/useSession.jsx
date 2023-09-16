@@ -21,7 +21,7 @@ import { formatDate } from '../../utils/functions';
 
 
     let sessionModel =  {
-            exists:false,
+        exists:false,
         data:{
             date:'',
             id:'',
@@ -29,7 +29,9 @@ import { formatDate } from '../../utils/functions';
             timestamp:'',
             opened_at:'',
             closed_at:'' 
-        }
+        },
+        user:{},
+        carts:[]
     }
 
   const useSession = () => {
@@ -60,6 +62,7 @@ import { formatDate } from '../../utils/functions';
             }
 
             localStorage.setItem('session', JSON.stringify({
+                ...state,
                 exists:true,
                 data:newSession
             }))
@@ -73,6 +76,7 @@ import { formatDate } from '../../utils/functions';
             }
     
             case 'LOAD':
+
                 console.log('Load session', action.data)
                            
                 return {
@@ -80,6 +84,8 @@ import { formatDate } from '../../utils/functions';
                     ...action.data
                     
                 }
+
+            
     
             case 'CLOSE':
 
@@ -129,12 +135,14 @@ import { formatDate } from '../../utils/functions';
         });
       };
 
+    const updateCartList = (cart)=>dispatchSession({type:'UPDATE_CARTS', cart })
+
 
     const evaluate = async ()=>{
         var sessionInStorage = await readLocalStorage("session");
-        console.log('useSession sessionInStorage', sessionInStorage, sessionInStorage==null)
+        console.log('useSession sessionInStorage', sessionInStorage, typeof sessionInStorage)
         if (sessionInStorage == null){
-            console.log('usSession init create new session')
+            console.log('useSession init create new session')
             dispatchSession({type:'CREATE'})
             
             }else{

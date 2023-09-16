@@ -1,17 +1,18 @@
 import React from 'react'
 import IdiomSelector from '../components/common/IdiomSelector'
 import BizerbaLogoSVG from '../components/common/BizerbaLogoSVG'
-import { useNavigate } from 'react-router-dom'
 
 
 
-const Welcome = () => {
+const Welcome = ({newCart, nav}) => {
 
-    const navigate = useNavigate()
+    console.log('newcart', newCart)
 
-    const handleInit = () =>{
+    const handleNewClient = () =>{
       console.log('calling init')
-      navigate('/flow-1')
+      newCart()
+      nav(1)
+      
     }
     
 
@@ -31,7 +32,7 @@ const Welcome = () => {
       </div>
 
       <button className="bg-orange-500  text-2xl rounded-full py-4 px-20 shadow-lg uppercase tracking-wider text-white"
-      onClick={handleInit}>
+      onClick={handleNewClient}>
           INIZIO
         </button>
         <IdiomSelector cn="absolute top-0 right-0 pt-3"/>

@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 
 import BizerbaLogoSVG from '../../components/common/BizerbaLogoSVG'
-import { useNavigate } from 'react-router-dom'
+
 import NumericKb from '../../components/common/NumericKb'
 
 const Greetings = () => {
@@ -9,7 +9,7 @@ const Greetings = () => {
     const [grade, setGrade] = useState(0)
 
 
-    const navigate = useNavigate()
+    
 
 
     useEffect(()=>{
@@ -23,7 +23,7 @@ const Greetings = () => {
   return ()=>{
       console.log('Greetings effect unmount navigate')
       setTimeout(() => {
-          navigate('/')
+          //navigate('/')
        }, 10000)
   }
 },[])

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import CartList from '../components/List Displayers/Cart Items List Displayer/CartList'
 import Bags from '../components/Bags'
 import useStore from '../context/hooks/useStore'
-import { useNavigate } from 'react-router-dom'
+
 import { getLocalStorageCollectionDataByKey, readLocalStorage} from '../utils/functions'
 import {insertData, fetchData} from '../api/api'
 import useCart from '../context/hooks/useCart'
@@ -15,7 +15,8 @@ const Payment = () => {
 
     const [total, setTotal] = useState(0)
     const [list, setList] = useState([])
-  
+
+    
 
     async function getData(){
         var res = await readLocalStorage("currentCart")
@@ -65,14 +66,21 @@ const ChoosePaymentComponent = ({total}) =>{
 
     const {bags} = useStore()
 
-    const navigate = useNavigate()
+    
+
 
     const updatePaymentMethod = (n)=>{
         console.log('vai mudar view', n)
+        
         setPaymentMethod(n)
     }
 
+
+    
     const PaymentCard = ({icon, title, id}) =>{
+
+        console.log( 'update session cart list')
+        
 
         return(
             <div className=" flex flex-col items-center justify-center h-[8rem]  border border-zinc-200 bg-white shadow-xl rounded-2xl  w-full gap-2" 
@@ -88,7 +96,7 @@ const ChoosePaymentComponent = ({total}) =>{
 
     if(paymentMethod == 1) return(<Bancomat view={updatePaymentMethod}/>)
     if(paymentMethod == 4) return(<PrintTicket view={updatePaymentMethod}/>)
-    if(paymentMethod == 5) navigate('flow-end')
+    if(paymentMethod == 5) return('flow-end')
 
     return(
     <div className='flex flex-col items-start justify-start  border-zinc-600 w-1/2 bg-white mx-2 mt-4 rounded-tl-2xl rounded-tr-2xl'>
@@ -117,7 +125,7 @@ const ChoosePaymentComponent = ({total}) =>{
                     <span className='text-zinc-900 font-normal text-4xl text-center py-3 '> {total}</span>
         </div>
 
-        <div onClick={()=>navigate('/home')} className=" flex flex-row h-fit items-center justify-center border-zinc-600 bg-teal-800 shadow-xl rounded-2xl  w-fit mt-4 mx-4 px-[4.5rem] py-6">
+        <div onClick={()=>console.log('/home')} className=" flex flex-row h-fit items-center justify-center border-zinc-600 bg-teal-800 shadow-xl rounded-2xl  w-fit mt-4 mx-4 px-[4.5rem] py-6">
                     <span className='text-white font-thin text-3xl text-center py-3 '> Torna indietro per aggiungere altri prodotti</span>
         </div>
         
@@ -135,22 +143,11 @@ const ChoosePaymentComponent = ({total}) =>{
 
 const Bancomat = (props)=>{
 
-    const navigate = useNavigate()
+   
     
 
     useEffect(()=>{
 
-        
-            console.log('save cart')
-
-            getLocalStorageCollectionDataByKey('items').then((res)=>{
-                fetchData('totem', Array.from(res))
-
-            })
-
-
-
-           
           
         return ()=>{
             console.log('bancomat effect unmount navigate')
@@ -159,7 +156,51 @@ const Bancomat = (props)=>{
              }, 3000)
         }
       },[])
+    
 
+      console.log('save cart')
+      console.log('closing cart')
+      //read session
+      let session = JSON.parse(localStorage.getItem('session'))
+      console.log('closeCart session', session)
+      let cart = JSON.parse(localStorage.getItem('currentCart'))
+      console.log('closeCart cart', cart, cart.closed_at=='')
+
+      if (cart.closed_at=='') {
+
+        var date = new Date();
+        // convert to milliseconds, add local time zone offset and get UTC time in milliseconds
+        var utcTime = date.getTime() + (date.getTimezoneOffset() * 60000);
+        console.log('closing...')
+        //set close data to cart
+        cart.closed_at = new Date(utcTime).toISOString()
+        cart.active= false
+        localStorage.setItem('currentCart', JSON.stringify(cart))
+        localStorage.setItem(cart.cart_id, JSON.stringify(cart))
+        //push cart to session cart list
+        let payload = []
+        
+        for (const item in cart.items){
+         
+          let obj = {
+            ...session.data,
+            ...item
+          }
+          payload.push(obj)
+
+        }
+        
+        //payload to post request
+        localStorage.setItem('payload', JSON.stringify(payload))
+
+
+        session.carts= session.carts.concat(cart)
+        //update session in local storage
+        localStorage.setItem('session', JSON.stringify(session))
+        //remove currentCart from local storage
+      }
+    
+    
     console.log('bancomat props' , props)
 
     return(
@@ -180,7 +221,7 @@ const Bancomat = (props)=>{
 
   const PrintTicket = (props)=>{
 
-    const navigate = useNavigate()
+    
 
     useEffect(()=>{
 
@@ -193,7 +234,7 @@ const Bancomat = (props)=>{
         return ()=>{
             console.log('PrintTicket effect unmount navigate')
             setTimeout(() => {
-                navigate('/flow-end')
+                console.log('/flow-end')
              }, 3000)
         }
       },[])

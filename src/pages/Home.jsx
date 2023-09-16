@@ -1,8 +1,11 @@
 import React, { useState, useEffect , useRef, useReducer} from 'react'
 import RenderListItem from '../components/RenderListItem'
 import useStore from '../context/hooks/useStore'
-import { useNavigate, useLocation } from 'react-router-dom'
+
 import { getLocalStorageCollectionDataByKey, getCartValue } from '../utils/functions'
+
+import Welcome from './Welcome'
+import Payment from './Payment'
 
 import useCart from '../context/hooks/useCart'
 import usePrices from '../context/hooks/usePrices'
@@ -11,49 +14,12 @@ import usePrices from '../context/hooks/usePrices'
 
 
 
-const listReducer = (state, action) => {
 
-    
-    console.log('reducer' ,state, action)
-    console.log('no reducer', Math.random())
-    
-    
-    switch (action.type) {
 
-    
-      case 'ADD_ITEM':
-        console.log('action Add', action.newItem)
-        action.newItem.entry_id = Math.random()
-        return {
-            ...state,
-            list: [...state.list, action.newItem],
-            
-            
-        }
 
-      case 'REMOVE_ITEM':
-        var item = state.list[action.key]
-        console.log('to delete', item)
-        return {
-          ...state,
-          //list: state.list.filter((item) => item.entry_id !== action.id),
-          list:state.list.map((el,i)=>
-              i==action.key
-              ?{...el, deleted:true}
-              :el
-          )
-        
-        };
-
-      
-      default:
-        throw new Error();
-    }
-
-    
-  };
 
 const views = [
+  'intro',
   'default',
   'payment'
 ]
@@ -66,22 +32,13 @@ const Home = () => {
   const [ prices , loading ] = usePrices()
   const [view, setView] = useState(views[0])
 
-  const [listData, dispatchListData]=useReducer(listReducer,{
-    list:[],
-    total:0,
-  })
-
-  
   const [isScannerOn, setIsScannerOn] = useState(false)
- 
- 
   const hasSerial = useRef(!!('serial' in navigator))
   
   const port = useRef(null)
   const portInfo = useRef(null)
   
-
-  const navigate = useNavigate()
+ 
 
   const { currentCart, 
           insertItem, 
@@ -95,10 +52,9 @@ const Home = () => {
  console.log('loading', loading)
 
 // get fiscal code from previus page
-const { state } = useLocation();
-const { code } = state || {};
-console.log('location state', state)
-console.log('location code', code)
+
+const { code } =  {};
+
 
 
 
@@ -167,23 +123,10 @@ console.log('location code', code)
 
             insertItem(scanned.replace(/\W/g, ""))
 
-            /* addItem(scanned.replace(/\W/g, "")).then(res=>{
-
-                nitem = res
-                nitem.entry_id = Math.random()
-                console.log('before dispatch', nitem)
-                dispatchListData({
-                                type:'ADD_ITEM',
-                                newItem:nitem
-                            })
-
-            }) */
             scanned=''
             end=false
             //scan.done = true
          }
-         
-         //console.log('list', list.current)
           
         if (scan.done) {
           // Allow the serial port.current to be closed later.
@@ -199,13 +142,13 @@ console.log('location code', code)
 
 
   
-  const payment = ()=>{
+  const changeView = (index)=>{
 
-    console.log('payment')
-    navigate('/payment')
-
-
+    console.log('change view new index', index)
+    setView(views[index])
   }
+
+  const initCart = () => createCart()
 
   const removeFromList = (key)=>{
 
@@ -218,21 +161,31 @@ console.log('location code', code)
   },0).toFixed(2)
  */
 
-  console.log('body listData', listData)
 
-  if (view === views[0]) return(<DefaultView 
+  if (view === views[0]) return(<Welcome 
+    newCart={createCart}
+    nav={changeView}/>)
+ 
+
+  if (view === views[1]) return(<DefaultView 
     currentCart={currentCart} 
-    scan ={isScannerOn}
+    scan ={port.current}
     bags={bags}
     initPort={start}
-    onTrash={removeFromList}/>)
+    onTrash={removeFromList}
+    nav={changeView}/>)
+
+  if (view === views[2]) return(<Payment
+      currentCart={currentCart} 
+      bags={bags}
+      nav={changeView}/>)
   
 }
 
 export default Home
 
 
-const DefaultView = ({currentCart, scan, bags, initPort, onTrash})=>{
+const DefaultView = ({currentCart, scan, bags, initPort, onTrash, nav})=>{
 
   const changeView = () => {console.log('change view')}
 
@@ -268,28 +221,13 @@ const DefaultView = ({currentCart, scan, bags, initPort, onTrash})=>{
                 onTrashClick={()=>removeItem(i)}
                 />)
                 :<span className='text-blue font-thin text-3xl px-3 w-[16rem] my-3'>Passa i prodotti nello scanner...</span>}
-                {/*  Array.from(list.current).length>0
-                ? list.current.map((el,i)=><div key={i}>{el}</div>)
-                :<span className='text-blue font-thin text-3xl px-3 w-[16rem] my-3'>Passa i prodotti nello scanner...</span>*/}
             </div>
 
         </div>
 
         <div className='static flex flex-col items-left justify-start  border-zinc-600 w-1/2 gap-5 ml-3 mt-4'>
             
-            {/*  <div className=" flex flex-row items-center justify-center border border-black w-full">
-                 
-                     <span className='mt-3 text-indigo-800 font-thin text-3xl px-3 self-center  '>Importo Totale:</span>
-                     <span className='text-zinc-900 font-normal text-4xl self-center '> $ 12,90</span>
-             </div>
- 
-             <div className=" -mt-5 flex flex-row items-center justify-center border border-black w-full">
-                 
-                     <span className='text-indigo-800 font-thin text-3xl px-3 self-center  '>Prodotti nel Carrello:</span>
-                     <span className='text-zinc-900 font-normal text-4xl self-center '>18</span>
-             </div>
-  */}
- 
+            
  {
     scan &&
  
@@ -298,7 +236,7 @@ const DefaultView = ({currentCart, scan, bags, initPort, onTrash})=>{
                 <div className=" flex flex-col w-full ">
                     <span className='text-blue font-thin text-3xl px-3 self-center w-[16rem] my-3'>Il scanner non legge il prodotto?</span>
                     <button className='bg-indigo-500  py-2 mx-2 rounded-lg shadow-xl text-white font-semibold w-[14rem] text-2xl'
-                    onClick={()=>navigate('/search')}>CLICCA
+                    onClick={()=>console.log('/search')}>CLICCA
                     </button>
                 </div>   
             </div>
@@ -359,7 +297,7 @@ const DefaultView = ({currentCart, scan, bags, initPort, onTrash})=>{
              </div>
              
              <button className={`bg-teal-600  py-6 mx-2 rounded-lg shadow-md text-white font-semibold w-full text-2xl ${currentCart.total==0?'disabled':''}`}
-             onClick={changeView}>PROCEDI COL PAGAMENTO
+             onClick={()=>nav(2)}>PROCEDI COL PAGAMENTO
              </button>
  
          </div>
@@ -430,7 +368,7 @@ const DefaultViewOld = (currentCart, bags)=>{
                 <div className=" flex flex-col w-full ">
                     <span className='text-blue font-thin text-3xl px-3 self-center w-[16rem] my-3'>Il scanner non legge il prodotto?</span>
                     <button className='bg-indigo-500  py-2 mx-2 rounded-lg shadow-xl text-white font-semibold w-[14rem] text-2xl'
-                    onClick={()=>navigate('/search')}>CLICCA
+                  >CLICCA
                     </button>
                 </div>   
             </div>

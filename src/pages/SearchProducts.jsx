@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import NumericKb from '../components/common/NumericKb'
 import useStore from '../context/hooks/useStore'
-import { useNavigate } from 'react-router-dom'
+
 
 import { addItemToCollectionLS, itemBuilder, getLocalStorageCollectionDataByKey } from '../utils/functions'
 
@@ -17,7 +17,6 @@ const SearchProducts = () => {
 
     const ref = useRef()
 
-    const navigate = useNavigate()
 
     //get cart data
     useEffect(()=>{
@@ -62,7 +61,7 @@ const SearchProducts = () => {
         addItemToCollectionLS('items', item)
         setFound({})
         setCode('')
-        navigate(-1)
+        
     }
 
 

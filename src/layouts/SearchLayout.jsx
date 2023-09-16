@@ -1,6 +1,6 @@
 import React , {useState, useEffect} from 'react'
 import { Outlet } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+
 
 
 import BizerbaLogoSVG from '../components/common/BizerbaLogoSVG';
@@ -12,7 +12,7 @@ const SearchLayout = () => {
     const [location, setLocation] = useState(window.location)
     console.log(location.pathname)
 
-    const navigate = useNavigate()
+   
 
   return (
     
@@ -21,7 +21,7 @@ const SearchLayout = () => {
 
         {/* BACK BUTTON ABSOLUTE POSITIONED */}
         <div className='absolute left-2'>
-            <button onClick={()=>navigate(-1)}>
+            <button onClick={()=>console.log('back')}>
                 <i className="fa-solid fa-circle-chevron-left fa-3x text-teal-600"></i>
             </button>
             

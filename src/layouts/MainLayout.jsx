@@ -1,6 +1,6 @@
 import React , {useState, useEffect} from 'react'
 import { Outlet } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+
 import useStore from '../context/hooks/useStore';
 
 import LotteryIconSVG from '../components/common/LotteryIconSVG';
@@ -8,14 +8,14 @@ import BizerbaLogoSVG from '../components/common/BizerbaLogoSVG';
 import useCart from '../context/hooks/useCart';
 import Bags from '../components/Bags';
 
-const MainLayout = () => {
+const MainLayout = ({children}) => {
 
     const [location, setLocation] = useState(window.location)
     console.log(location.pathname)
 
     const {bags} = useStore()
 
-    const navigate = useNavigate()
+    
 
     const { deleteCart } = useCart()
 
@@ -32,7 +32,7 @@ const MainLayout = () => {
 
         {/* BACK BUTTON ABSOLUTE POSITIONED */}
         <div className='absolute left-2'>
-            <button onClick={()=>navigate('/')}>
+            <button onClick={()=>console.log('/')}>
                 <i className="fa-solid fa-circle-chevron-left fa-3x text-teal-600"></i>
             </button>
             
@@ -86,7 +86,7 @@ const MainLayout = () => {
        
         <div className='flex flex-grow h-full m-16 '
         >
-            <Outlet />
+            {children}
         </div>
 
         

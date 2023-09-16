@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 
 import BizerbaLogoSVG from '../../components/common/BizerbaLogoSVG'
-import { useNavigate } from 'react-router-dom'
+
 import NumericKb from '../../components/common/NumericKb'
 
 
@@ -13,7 +13,7 @@ const InputFiscalCode = () => {
 
   
 
-    const navigate = useNavigate()
+   
 
     const handleCodeChange = (code) =>{
         console.log('handleCodeChange', code)
@@ -26,7 +26,7 @@ const InputFiscalCode = () => {
 
       if (code !== '') {
         
-        navigate('/home', { state: { code } })
+        //navigate('/home', { state: { code } })
 
       }
   }
@@ -58,7 +58,7 @@ const InputFiscalCode = () => {
         </div>
   
         <button className="bg-orange-500  text-2xl rounded-full py-4 px-20 shadow-lg uppercase tracking-wider text-white"
-        onClick={()=>navigate('/home')}>
+        onClick={()=>console.log('/home')}>
             NO, GRAZIE
           </button>
 

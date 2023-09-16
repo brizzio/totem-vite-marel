@@ -4,7 +4,7 @@ import { upsertCollectionLS ,
         itemBuilder, 
         removeItemFromCollectionLSById, 
         findBagItemInLSItems} from '../utils/functions';
-import { useNavigate , useLocation } from 'react-router-dom';
+
 
 
 const Bags = ({counter}) => {
@@ -13,9 +13,9 @@ const Bags = ({counter}) => {
     
     const [count, setCount] = useState(counter)
 
-    const navigate = useNavigate()
+    
 
-    let location = useLocation();
+   
     
     useEffect(()=>{
       setCount(counter)
@@ -28,7 +28,7 @@ const Bags = ({counter}) => {
         handleUpdateBags(count)
         processBagUpdate()
         console.log('location:', location)
-        navigate(location.pathname)
+        //navigate(location.pathname)
         return ()=>console.log('Bags unmount count:', count)
     },[count])
 

@@ -6,10 +6,10 @@ import React, { useState,
 
 import useStore from './useStore'
 
-import { addItemToCollectionLS, itemBuilder, getLocalStorageCollectionDataByKey, formatDate } from '../../utils/functions'
+import { addItemToCollectionLS, itemBuilder, readLocalStorage, formatDate } from '../../utils/functions'
 import usePrices from './usePrices'
 import useSession from './useSession'
-import { useNavigate } from 'react-router-dom'
+
 
 
 //https://codesandbox.io/s/react-input-autocomplete-knwn3?file=/src/InputAuto.js
@@ -23,25 +23,15 @@ const useCart = () => {
 
     const [prices] = usePrices()
     const session = useSession().session.data
+    const updateSessionCartList = useSession().updateCartList
 
     console.log('useCart prices', prices)
     console.log('useCart session', session)
 
-    //get cart data
-   /*  useEffect(()=>{
-
-        getLocalStorageCollectionDataByKey('cart').then(res=>{
-            console.log('SearchProducts effect local storage cart', res)
-            setCart(res)
-        })
-          
-        
-      }, [])
-
- */
-      const navigate = useNavigate()
-
+    
+      
       const currentCartModel = {
+        active:false,
         cart_id:'',
         date:'',
         created_at:'',
@@ -65,8 +55,12 @@ const useCart = () => {
 
     
         console.log('currentCart reducer' , state, action)
-    
         
+        let memo 
+        
+        readLocalStorage('currentCart').then(res=>memo=res)
+       
+        console.log('memo' , memo)
         
         switch (action.type) {
     
@@ -149,8 +143,10 @@ const useCart = () => {
                 localStorage.setItem('currentCart', JSON.stringify(removedState))
     
             return removedState;
+
             
-    
+
+
             case 'DELETE_CART':
     
             console.log('remove currentCart ')
@@ -245,6 +241,11 @@ const useCart = () => {
         dispatchCurrentCart({type:'ADD_FISCAL_CODE', code})
     }
 
+    const closeCart = ()=>{
+        console.log('close current cart')
+        dispatchCurrentCart({type:'CLOSE_CART'})
+    }
+
   
 
   return (
@@ -257,8 +258,8 @@ const useCart = () => {
         removeItem,
         createCart,
         deleteCart,
-        addFiscalCode
-
+        addFiscalCode,
+       
     }
    
   )
